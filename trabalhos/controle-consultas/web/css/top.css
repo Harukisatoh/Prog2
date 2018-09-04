@@ -1,0 +1,52 @@
+.top {
+    top: 0;
+    width: 100%;
+    z-index: 1;
+    max-height: 75px;
+    box-shadow: 5px 5px 6px rgba(0,0,0,0.6);
+    display: flex;
+}
+.div-name {
+    max-height: inherit;
+    display: inline-block;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+.menu-buttons{
+    display: flex;
+}
+.btnMenu {
+    margin: 25px 15px 0px 15px
+}
+.btn-menu {
+    color: rgba(0,0,0,0.75);
+}
+.project-name {
+    max-height: inherit;
+    text-align: center;
+    font-size: 1.5rem;
+    padding-top: 20px;
+}
+.main-usuario {
+    margin-left: 50%;
+    transform: translate(-50%);
+    max-width: 363px;
+}
+
+.main-paciente {
+    margin-left: 50%;
+    transform: translate(-50%);
+    max-width: 384px;
+}
+
+.main-medico {
+    margin-left: 50%;
+    transform: translate(-50%);
+    max-width: 384px;
+}
+
+.main-atendimento {
+    margin-left: 50%;
+    transform: translate(-50%);
+    max-width: 389px;
+}

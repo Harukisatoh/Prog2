@@ -1,0 +1,21 @@
+-- Table: public.atendimento
+
+-- DROP TABLE public.atendimento;
+
+CREATE TABLE public.atendimento
+(
+  id integer NOT NULL DEFAULT nextval('atendimento_id_seq'::regclass),
+  data timestamp without time zone,
+  sintomas character varying(255),
+  valor double precision,
+  paciente integer,
+  CONSTRAINT atendimento_pkey PRIMARY KEY (id),
+  CONSTRAINT fk_atendimento_paciente FOREIGN KEY (paciente)
+      REFERENCES public.paciente (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE public.atendimento
+  OWNER TO postgres;

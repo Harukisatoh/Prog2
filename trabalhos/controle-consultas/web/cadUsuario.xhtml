@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
+  <h:head>
+    <meta charset="UTF-8"/>
+    <title>Cadastro de Usuário</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="../css/normalize.css"/>
+    <link rel="stylesheet" href="../css/cayman.css"/>
+    <link rel="stylesheet" href="../css/top.css"/>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'/>
+  </h:head>
+  <h:body>
+    <div class="top">
+        <div class="div-name">
+            <h1 class="project-name">Controle de Consultas Médicas</h1> <br/>
+        </div>
+        <div class="menu-buttons">
+            <div class="btnMenu">
+                <h:link class="btn-menu" outcome="cadUsuario" value="Cadastro de Usuário"/>
+            </div>
+            <div class="btnMenu">
+                <h:link class="btn-menu" outcome="cadMedico" value="Cadastro de Médico"/>
+            </div>
+            <div class="btnMenu">
+                <h:link class="btn-menu" outcome="cadPaciente" value="Cadastro de Paciente"/>
+            </div>
+            <div class="btnMenu">
+                <h:link class="btn-menu" outcome="cadAtendimento" value="Cadastro de Atendimentos"/>
+            </div>
+        </div>
+      </div>
+    <section class="main-content">
+      <div class="main-usuario">
+        <p:growl  id="mensagem" showDetail="true" autoUpdate="true"/>
+        <h:form id="frmCad">
+          <h2>Cadastro de Usuários</h2>
+          <h:panelGrid class="dark-grey" columns="2">
+              <h:outputLabel for="Nome" value="Nome:" />
+              <h:inputText id="Nome" maxlength="50" value="#{UsuarioMB.usuario.nome}" required="true" requiredMessage="Nome obrigatório"/>
+              <h:outputLabel for="Login" value="Login:" />
+              <h:inputText id="Login" value="#{UsuarioMB.usuario.login}" required="true" requiredMessage="Login obrigatório"/>
+              <h:outputLabel for="Senha" value="Senha:" />
+              <h:inputText id="Senha" value="#{UsuarioMB.usuario.senha}" required="true" requiredMessage="Senha obrigatória"/>
+              <h:outputLabel for="Cargo" value="Cargo:" />
+              <h:inputText id="Cargo" value="#{UsuarioMB.usuario.cargo}" /> 
+          </h:panelGrid>
+          <p:commandButton class="save-btn" value="Salvar" action="#{UsuarioMB.incluir()}"
+                               update="frmCad, :frmTable" />  
+          <p:commandButton title="Consulta por nome" action="#{UsuarioMB.listarPorNomeParcial()}" update=":frmTable" value="Consultar"/>
+          <p:commandButton style="margin-left: 10px" title="Lista todos os usuários" action="#{UsuarioMB.listar}" update=":frmTable" value="Listar"/>     
+        </h:form>
+        </div>
+        <h:form id="frmTable">
+          <p:dataTable id="usuario" var="usuario" value="#{UsuarioMB.lista}"
+              paginator="true" rows="50" emptyMessage="Não há registros na lista"
+              paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+              rowsPerPageTemplate="10,15,25,50,100">
+              <f:facet name="header">Lista de Usuários</f:facet>
+              <p:column headerText="Id" style="width: 10%;" sortBy="#{usuario.id}">
+                  <h:outputText value="#{usuario.id}" />
+              </p:column>
+              <p:column headerText="Nome" style="width: 25%;" sortBy="#{usuario.nome}">	
+                  <h:outputText value="#{usuario.nome}" />
+              </p:column>
+              <p:column headerText="Login" style="width: 25%;" sortBy="#{usuario.login}">
+                  <h:outputText value="#{usuario.login}" />
+              </p:column>
+              <p:column headerText="Senha" style="width: 25%;" sortBy="#{usuario.senha}">
+                  <h:outputText value="#{usuario.senha}" />
+              </p:column>
+              <p:column headerText="Cargo" style="width: 25%;" sortBy="#{usuario.cargo}">
+                  <h:outputText value="#{usuario.cargo}" />
+              </p:column>
+              <p:column headerText="">
+                  <p:commandButton value="Editar" action="#{UsuarioMB.preparaAlterar(usuario)}" onclick="PF('editarDialog').show()" update=":formAltera"/>
+              </p:column>
+              <p:column headerText="">
+                  <p:commandButton value="Excluir" actionListener="#{UsuarioMB.excluir(usuario)}" update=":frmTable">
+                  <p:confirm header="Excluir usuário" message="Tem certeza que deseja excluir este usuário?"/>
+                </p:commandButton>
+              </p:column>
+          </p:dataTable>
+          <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+            <p:outputPanel style="width: 100%; text-align:center" layout="block"> 
+              <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" />
+              <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" />
+            </p:outputPanel>
+          </p:confirmDialog>
+        </h:form>
+        <p:dialog id="editarDialog" widgetVar="editarDialog" modal="true" header="Alteração de usuário">   
+              <h:form id="formAltera">  
+                  <h:panelGrid columns="2">
+                      <h:outputLabel value="Id: "/>
+                      <p:inputText id="id" disabled="true" value="#{UsuarioMB.aux.id}"/>                       
+                      <h:outputLabel value="Nome: "/>
+                      <p:inputText maxlength="50" value="#{UsuarioMB.aux.nome}" required="true" requiredMessage="Nome obrigatório"/>
+                      <h:outputLabel value="Login: "/>
+                      <p:inputText maxlength="20" value="#{UsuarioMB.aux.login}" required="true" requiredMessage="Login obrigatório"/>
+                      <h:outputLabel value="Senha: "/>
+                      <p:inputText maxlength="20" value="#{UsuarioMB.aux.senha}" required="true" requiredMessage="Senha obrigatória"/>
+                      <h:outputLabel value="Cargo: "/>
+                      <p:inputText maxlength="13" value="#{UsuarioMB.aux.cargo}"/>
+                  </h:panelGrid>
+                  <p:outputPanel style="width: 100%; text-align:center" > <br/>
+                      <p:commandButton value="Continuar" ajax="false"
+                          action="#{UsuarioMB.alterar()}" styleClass="ui-state-hover"/> 
+                  </p:outputPanel>
+              </h:form>
+        </p:dialog>
+      <br/>
+      <footer class="site-footer">
+          <h:form id="frmSair">
+            <p:commandButton action="#{loginMB.actionLogout()}" value="Sair"/>
+          </h:form>
+          <span class="site-footer-owner">
+            <a href="https://github.com/Harukisatoh/Prog2/tree/master/trabalhos">CONTROLE DE CONSULTAS MÉDICAS</a> - TODOS OS DIREITOS RESERVADOS.<br/> Feito por: <a href="https://github.com/Harukisatoh">Gabriel Haruki Gomes Satô</a>.
+          </span>
+      </footer>
+    </section>
+  </h:body>
+</html>

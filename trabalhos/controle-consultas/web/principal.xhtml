@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
+  <h:head>
+    <meta charset="UTF-8"/>
+    <title>Controle de Consultas Médicas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="../css/normalize.css"/>
+    <link rel="stylesheet" href="../css/cayman.css"/>
+    <link rel="stylesheet" href="../css/top.css"/>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'/>	
+  </h:head>
+  <h:body>
+    <div class="top">
+        <div class="div-name">
+            <h1 class="project-name">Controle de Consultas Médicas</h1> <br/>
+        </div>
+        <div class="menu-buttons">
+            <div class="btnMenu">
+                <h:link class="btn-menu" outcome="cadUsuario" value="Cadastro de Usuário"/>
+            </div>
+            <div class="btnMenu">
+                <h:link class="btn-menu" outcome="cadMedico" value="Cadastro de Médico"/>
+            </div>
+            <div class="btnMenu">
+                <h:link class="btn-menu" outcome="cadPaciente" value="Cadastro de Paciente"/>
+            </div>
+            <div class="btnMenu">
+                <h:link class="btn-menu" outcome="cadAtendimento" value="Cadastro de Atendimentos"/>
+            </div>
+        </div>
+      </div>
+    <section class="main-content">
+        <h:form id="frmSair">
+          <p:commandButton action="#{loginMB.actionLogout()}" value="Sair"/>
+        </h:form>
+        <footer class="site-footer">
+            <span class="site-footer-owner">
+                <a href="https://github.com/Harukisatoh/Prog2/tree/master/trabalhos">CONTROLE DE CONSULTAS MÉDICAS</a> - TODOS OS DIREITOS RESERVADOS.<br/> Feito por: <a href="https://github.com/Harukisatoh">Gabriel Haruki Gomes Satô</a>.
+            </span>
+        </footer>
+    </section>
+  </h:body>
+</html>
